@@ -1,24 +1,47 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import styled from 'styled-components'
+import { AccountBox } from './Components/accountBox';
+import { Home } from './Components/HomePage/Home'
+import { TopicPage } from './Components/TopicPage/TopicPage'
+
+import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
+
+const AppContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:center;
+`;
 
 function App() {
+
+  const history = useHistory();
+  console.log("This is the history")
+  console.log(history)
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+
+      {/* Root */}
+        <Route exact path="/">
+          {/* Login Form */}
+          <AppContainer>
+            <AccountBox />
+          </AppContainer>
+          </Route>
+
+        {/* Home Page */}
+        <Route path="/home" component={Home} />
+
+        {/* Sports Page */}
+        <Route path="/sports" component={() => <TopicPage page="Sports" />} /> 
+      </Switch>
+    </Router>
   );
 }
 
