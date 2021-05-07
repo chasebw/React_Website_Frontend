@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { SiteNavbar } from '../Navbar/Navbar';
 import { PageBanner } from '../PageBanner/PageBanner';
 import { Marginer } from "../Marginer/index"
@@ -6,12 +6,22 @@ import { PostContainer } from "./PostContainer"
 import { AddPostForm } from './AddPostForm';
 import { EditModule } from './EditModule';
 import { DeleteModule } from './DeletePostModule';
+import { useFetch } from './CustomHooks/useFetch';
 
 export const TopicPage = (props) => {
 
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([])
   const [editModalShow, setEditModalShow] = useState(false)
   const [deleteModalShow, setDeleteModalShow] = useState(false)
+
+  // const url = '/posts/all'
+  // const user = {
+  //   name: "RobotUser137",
+  //   message: "Hello Server",
+  //   id: 3
+  // }
+
+  // const {posts, postsAreLoading} = useFetch(url, user)
 
   const grabPosts = async () => {
     console.log("Running fetch all posts")
@@ -39,13 +49,18 @@ export const TopicPage = (props) => {
     }
 }
 
+
+useEffect(() => {
+  grabPosts()
+},[])
+
         return (
           <div>
           <SiteNavbar />
           <Marginer direction="vertical" margin="1.6em"/>
           <PageBanner page={props.page}/>
           <AddPostForm refreshPosts={grabPosts}/>
-          <PostContainer postHandler={grabPosts} 
+          <PostContainer 
           posts={posts} 
           setEditModalShow={() => setEditModalShow(true)}
           setDeleteModalShow={() => setDeleteModalShow(true)}
@@ -60,7 +75,6 @@ export const TopicPage = (props) => {
           onHide={() => setDeleteModalShow(false)} 
           backdrop="static" 
           keyboard={false}
-          handleClose={() => setDeleteModalShow(false)}
           handleClose={() => setDeleteModalShow(false)}
           />
 

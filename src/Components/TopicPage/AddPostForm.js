@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Form, Button, Spinner } from 'react-bootstrap'
+import { useFetch } from './CustomHooks/useFetch'
 
 // import { SiteNavbar } from '../Navbar/Navbar';
 //import  {Marginer } from "../Marginer/index"
@@ -31,7 +32,6 @@ export const AddPostForm = (props) => {
         setIsLoading(true)
         console.log("Running Add Post")
         setTime(grabTime())
-
         if (!content) {
             return;
         }

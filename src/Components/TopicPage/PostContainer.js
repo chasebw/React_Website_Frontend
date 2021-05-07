@@ -7,14 +7,7 @@ import { PostElement } from './PostElement'
 
 export const PostContainer = (props) => {
 
-  const [user, setUser] = useState("Jack Hendry")
-  const [data, setData] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-
-  useEffect(() => {
-    console.log("Use Effect Called")
-    props.postHandler()
-  }, [])
+  //postsAreLoading is prop from parent passed down
 
     const data1 = [
         {user: "Jack",
@@ -30,11 +23,12 @@ export const PostContainer = (props) => {
 
         return (
           <div className="post_container">
-          {/* {props.posts ?  props.posts.map((post, index) => <PostElement post={post} index={index}/> ) : <SiteSpinner/> } */}
-          {data1.map((post, index) => <PostElement post={post} 
-          index={index} 
+          {props.posts ?  props.posts.map((post, index) => <PostElement post={post} index={index}
           setEditModalShow={props.setEditModalShow}
-          setDeleteModalShow={props.setDeleteModalShow} /> )}
+          setDeleteModalShow={props.setDeleteModalShow}
+          /> ) : <SiteSpinner/> }
+          {/* {data1.map((post, index) => <PostElement post={post}  */}
+         
           </div>
         );
 }
