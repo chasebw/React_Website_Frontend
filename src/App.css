@@ -35,6 +35,14 @@
   margin-top: auto;
 }
 
+.post_button_div {
+  margin: 2px;
+}
+
+.post_button {
+  margin: 2px;
+}
+
 .post_time {
   font-size: 11px;
   color: gray;

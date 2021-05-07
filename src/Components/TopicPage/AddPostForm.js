@@ -24,6 +24,7 @@ export const AddPostForm = (props) => {
     const handleSubmit = (event) => {
         addPost()
         event.preventDefault()
+        props.refreshPosts()
     }
 
     const addPost = async () => {
@@ -52,11 +53,13 @@ export const AddPostForm = (props) => {
             let result = await res.json();
             setIsLoading(false)
             console.log(result)
+            setContent('')
         }
 
         catch (e) {
             setIsLoading(false)
             console.log(e)
+            setContent('')
         }
     }
 
