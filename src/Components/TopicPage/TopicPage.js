@@ -14,14 +14,53 @@ export const TopicPage = (props) => {
   const [editModalShow, setEditModalShow] = useState(false)
   const [deleteModalShow, setDeleteModalShow] = useState(false)
 
-  // const url = '/posts/all'
-  // const user = {
-  //   name: "RobotUser137",
-  //   message: "Hello Server",
-  //   id: 3
-  // }
 
-  // const {posts, postsAreLoading} = useFetch(url, user)
+  const editPlaceholder =  {name: 'PlaceHolderName', 
+  content: 'PlaceHolderContent', 
+  post_id: 'placeHolderPostID'}
+
+  const [editElementIsLoading, setEditElementIsLoading] = useState(false)
+  const [editPostContent, setEditPostContent] = useState(editPlaceholder)
+
+
+  const handleShowEditPost = (id) => {
+    setEditElementIsLoading(true)
+    setEditModalShow(true)
+    grabSinglePost(id)
+    setEditElementIsLoading(false)
+  }
+
+  const handleCloseEditPost = () => {
+    setEditModalShow(false)
+    setEditPostContent(editPlaceholder)
+  }
+
+  const grabSinglePost = async (id) => {
+    console.log(`Grabbing Post with id: ${id}`)
+    try {
+      let res = await fetch(`/posts/${id}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        query: JSON.stringify({
+          name: 'RobotUser137',
+          post_id: id
+        })
+      })
+
+      let result = await res.json()
+      console.log(result.post)
+      setEditPostContent(result.post)
+
+    }
+    catch(e) {
+      console.log(e)
+      console.log('Error receiving singlePost')
+    }
+
+  }
 
   const grabPosts = async () => {
     console.log("Running fetch all posts")
@@ -49,26 +88,32 @@ export const TopicPage = (props) => {
     }
 }
 
-
+// When this element is rendered it will grab posts
 useEffect(() => {
   grabPosts()
 },[])
 
         return (
-          <div>
+          <>
           <SiteNavbar />
           <Marginer direction="vertical" margin="1.6em"/>
           <PageBanner page={props.page}/>
           <AddPostForm refreshPosts={grabPosts}/>
           <PostContainer 
-          posts={posts} 
+          posts={posts}
+          handleShowEditPost={(id) => handleShowEditPost(id)}
           setEditModalShow={() => setEditModalShow(true)}
           setDeleteModalShow={() => setDeleteModalShow(true)}
           />
 
           <EditModule
           show={editModalShow}
-          onHide={() => setEditModalShow(false)} />
+          onHide={() => handleCloseEditPost()}
+          editPostContent={editPostContent}
+          handleShowEditPost={(id) => handleShowEditPost(id)}
+          editElementIsLoading={editElementIsLoading}
+
+          />
 
           <DeleteModule 
           show={deleteModalShow} 
@@ -78,6 +123,6 @@ useEffect(() => {
           handleClose={() => setDeleteModalShow(false)}
           />
 
-          </div>
+          </>
         );
 }

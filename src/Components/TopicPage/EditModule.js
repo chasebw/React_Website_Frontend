@@ -1,5 +1,25 @@
 import React from 'react'
-import { Modal, Button, Form } from 'react-bootstrap'
+import { Modal, Button, Form, Spinner } from 'react-bootstrap'
+
+
+const FormBody = (props) => {
+    return (
+        <Form>
+            <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>User</Form.Label>
+                <Form.Control type="text" placeholder={props.user} readOnly />
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>Post_id</Form.Label>
+                <Form.Control type="text" placeholder={props._id} readOnly />
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Label> Content </Form.Label>
+                <Form.Control as="textarea" rows={3} value={props.content}></Form.Control>
+            </Form.Group>
+        </Form >
+    )
+}
 
 export const EditModule = (props) => {
     return (
@@ -15,16 +35,12 @@ export const EditModule = (props) => {
           </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>
-                    <Form.Group controlId="exampleForm.ControlInput1">
-                        <Form.Label>User</Form.Label>
-                        <Form.Control type="text" placeholder="RobotUser137" readOnly />
-                    </Form.Group>
-                    <Form.Group controlId="exampleForm.ControlTextarea1">
-                        <Form.Label> Content </Form.Label>
-                        <Form.Control as="textarea" rows={3} />
-                    </Form.Group>
-                </Form>
+
+
+                {props.editElementIsLoading ? <Spinner /> :
+
+                    <FormBody user={props.editPostContent.user} post_id={props.editPostContent._id} content={props.editPostContent.content} />}
+
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={props.onHide}>Close</Button>

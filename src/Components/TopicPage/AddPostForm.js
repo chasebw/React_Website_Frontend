@@ -14,6 +14,7 @@ export const AddPostForm = (props) => {
         const timeString = date.toLocaleTimeString()
         return dateString + ", " + timeString;
     }
+    
 
     const [content, setContent] = useState('')
     const [user, setUser] = useState('RobotUser137')

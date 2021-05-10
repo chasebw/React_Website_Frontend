@@ -13,7 +13,7 @@ export const PostContainer = (props) => {
         {user: "Jack",
         content: "I love it here!",
         time: "April 12, 2021"},
-        {user: "Suzie",
+        {user: "Susie",
         content: "I love it here too!",
         time: "April 12, 2021"},
         {user: "Peeraya",
@@ -24,7 +24,7 @@ export const PostContainer = (props) => {
         return (
           <div className="post_container">
           {props.posts ?  props.posts.map((post, index) => <PostElement post={post} index={index}
-          setEditModalShow={props.setEditModalShow}
+          handleShowEditPost={props.handleShowEditPost}
           setDeleteModalShow={props.setDeleteModalShow}
           /> ) : <SiteSpinner/> }
           {/* {data1.map((post, index) => <PostElement post={post}  */}

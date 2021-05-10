@@ -16,7 +16,7 @@ export const PostElement = (props) => {
         <div className="col-xs-3 post_time">
           Posted: {props.post.time}
           <div class="post_button_div">
-          <button onClick={() => props.setEditModalShow()} className="btn btn-primary post_button">Edit</button>
+          <button onClick={() => props.handleShowEditPost(props.post._id)} className="btn btn-primary post_button">Edit</button>
           <button onClick={() => props.setDeleteModalShow()} className="btn btn-danger post_button">Delete</button>
         </div>
         </div>
