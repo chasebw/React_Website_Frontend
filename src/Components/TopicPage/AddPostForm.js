@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form, Button, Spinner } from 'react-bootstrap'
 import { useFetch } from './CustomHooks/useFetch'
 
-// import { SiteNavbar } from '../Navbar/Navbar';
+//import { SiteNavbar } from '../Navbar/Navbar';
 //import  {Marginer } from "../Marginer/index"
 
 export const AddPostForm = (props) => {
@@ -15,13 +15,11 @@ export const AddPostForm = (props) => {
         return dateString + ", " + timeString;
     }
     
-
     const [content, setContent] = useState('')
     const [user, setUser] = useState('RobotUser137')
     const [time, setTime] = useState(grabTime())
     const [isLoading, setIsLoading] = useState(false)
     const [buttonDisabled, setButtonDisabled] = useState(false)
-
 
     const handleSubmit = (event) => {
         addPost()
@@ -47,7 +45,7 @@ export const AddPostForm = (props) => {
                 body: JSON.stringify({
                     user: user,
                     content: content,
-                    time: time
+                    time: time,
                 })
             })
 
@@ -74,6 +72,7 @@ export const AddPostForm = (props) => {
                         rows={5}
                         onChange={(event) => setContent(event.target.value)}
                         value={content ? content : ''}
+                        placeholder="Write something here ..."
                     />
                 </Form.Group>
                 <Button

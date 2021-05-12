@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { PostModalContext } from './PostModalContext'
+
 
 export const PostElement = (props) => {
+
+  const {handleShowModal} = useContext(PostModalContext)
 
   return (
     <div className="topic_post row" style={{ backgroundColor: "white" }}>
@@ -16,8 +20,8 @@ export const PostElement = (props) => {
         <div className="col-xs-3 post_time">
           Posted: {props.post.time}
           <div class="post_button_div">
-          <button onClick={() => props.handleShowEditPost(props.post._id)} className="btn btn-primary post_button">Edit</button>
-          <button onClick={() => props.setDeleteModalShow()} className="btn btn-danger post_button">Delete</button>
+          <button onClick={() => handleShowModal(props.post._id, props.setEditModalShow)} className="btn btn-primary post_button">Edit</button>
+          <button onClick={() => handleShowModal(props.post._id, props.setDeleteModalShow)} className="btn btn-danger post_button">Delete</button>
         </div>
         </div>
       </div>

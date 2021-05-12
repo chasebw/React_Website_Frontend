@@ -24,7 +24,7 @@ export const PostContainer = (props) => {
         return (
           <div className="post_container">
           {props.posts ?  props.posts.map((post, index) => <PostElement post={post} index={index}
-          handleShowEditPost={props.handleShowEditPost}
+          setEditModalShow={props.setEditModalShow}
           setDeleteModalShow={props.setDeleteModalShow}
           /> ) : <SiteSpinner/> }
           {/* {data1.map((post, index) => <PostElement post={post}  */}

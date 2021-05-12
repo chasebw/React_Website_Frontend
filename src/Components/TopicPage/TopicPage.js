@@ -7,6 +7,7 @@ import { AddPostForm } from './AddPostForm';
 import { EditModule } from './EditModule';
 import { DeleteModule } from './DeletePostModule';
 import { useFetch } from './CustomHooks/useFetch';
+import { PostModalProvider } from './PostModalContext'
 
 export const TopicPage = (props) => {
 
@@ -19,47 +20,11 @@ export const TopicPage = (props) => {
   content: 'PlaceHolderContent', 
   post_id: 'placeHolderPostID'}
 
-  const [editElementIsLoading, setEditElementIsLoading] = useState(false)
   const [editPostContent, setEditPostContent] = useState(editPlaceholder)
-
-
-  const handleShowEditPost = (id) => {
-    setEditElementIsLoading(true)
-    setEditModalShow(true)
-    grabSinglePost(id)
-    setEditElementIsLoading(false)
-  }
 
   const handleCloseEditPost = () => {
     setEditModalShow(false)
     setEditPostContent(editPlaceholder)
-  }
-
-  const grabSinglePost = async (id) => {
-    console.log(`Grabbing Post with id: ${id}`)
-    try {
-      let res = await fetch(`/posts/${id}`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        query: JSON.stringify({
-          name: 'RobotUser137',
-          post_id: id
-        })
-      })
-
-      let result = await res.json()
-      console.log(result.post)
-      setEditPostContent(result.post)
-
-    }
-    catch(e) {
-      console.log(e)
-      console.log('Error receiving singlePost')
-    }
-
   }
 
   const grabPosts = async () => {
@@ -99,29 +64,33 @@ useEffect(() => {
           <Marginer direction="vertical" margin="1.6em"/>
           <PageBanner page={props.page}/>
           <AddPostForm refreshPosts={grabPosts}/>
+          
+        <PostModalProvider> {/* Gives the Context of a Single Post*/}
+
           <PostContainer 
           posts={posts}
-          handleShowEditPost={(id) => handleShowEditPost(id)}
-          setEditModalShow={() => setEditModalShow(true)}
-          setDeleteModalShow={() => setDeleteModalShow(true)}
+          setEditModalShow={setEditModalShow}
+          setDeleteModalShow={setDeleteModalShow}
           />
-
+      
           <EditModule
           show={editModalShow}
+          handleModelShow={setEditModalShow}
           onHide={() => handleCloseEditPost()}
-          editPostContent={editPostContent}
-          handleShowEditPost={(id) => handleShowEditPost(id)}
-          editElementIsLoading={editElementIsLoading}
-
+          refreshPosts={grabPosts}
           />
 
           <DeleteModule 
-          show={deleteModalShow} 
+          show={deleteModalShow}
+          setDeleteModalShow={setDeleteModalShow} 
           onHide={() => setDeleteModalShow(false)} 
           backdrop="static" 
           keyboard={false}
           handleClose={() => setDeleteModalShow(false)}
+          refreshPosts={grabPosts}
           />
+
+        </PostModalProvider>
 
           </>
         );
