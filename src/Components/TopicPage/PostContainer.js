@@ -9,18 +9,6 @@ export const PostContainer = (props) => {
 
   //postsAreLoading is prop from parent passed down
 
-    const data1 = [
-        {user: "Jack",
-        content: "I love it here!",
-        time: "April 12, 2021"},
-        {user: "Susie",
-        content: "I love it here too!",
-        time: "April 12, 2021"},
-        {user: "Peeraya",
-        content: "I love it here more!",
-        time: "April 12, 2021"}
-    ]    
-
         return (
           <div className="post_container">
           {props.posts ?  props.posts.map((post, index) => <PostElement post={post} index={index}

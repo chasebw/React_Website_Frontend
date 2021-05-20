@@ -3,7 +3,7 @@ import React, { useState, createContext } from 'react'
 export const PostModalContext = createContext();
 
 export const PostModalContextPlaceHolder = {
-    user: "PlaceHolderUser",
+    user: {username: "usernamePlaceholder", _id: "placeholderID"},
     content: "PlaceHolderContent",
     time: "PlaceHolderTime",
     _id: "PlaceHolderId"
@@ -39,7 +39,6 @@ export const PostModalProvider = (props) => {
               'Content-Type': 'application/json'
             },
             query: JSON.stringify({
-              name: 'RobotUser137',
               post_id: id
             })
           })

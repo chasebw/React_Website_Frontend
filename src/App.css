@@ -4,6 +4,20 @@
   background-color: #282c34;
 }
 
+.error_class {
+  font-size: .85em;
+  color: #ffc31b;
+  padding: .4em;
+  margin: auto;
+  margin-bottom: 2px;
+  border-radius: 7px;
+  border: solid 2px #ffc31b;
+  background: #06429e;
+  text-align: center;
+}
+
+
+
 .post_container {
   display: flex;
   justify-content: center;

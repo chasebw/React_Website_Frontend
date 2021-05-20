@@ -18,11 +18,6 @@ const AppContainer = styled.div`
 
 function App() {
 
-  const history = useHistory();
-  console.log("This is the history")
-  console.log(history)
-
-
   return (
     <Router>
       <Switch>

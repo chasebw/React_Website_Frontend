@@ -1,17 +1,46 @@
 import React from 'react'
 import {Navbar, Nav, Button} from 'react-bootstrap'
 import { Marginer } from '../Marginer'
-import { Link } from 'react-router-dom' 
+import { Link, useHistory } from 'react-router-dom' 
 
 
 // Note: use this link to adjust color schemes
 // https://getbootstrap.com/docs/4.0/components/navbar/#color-schemes
 
 
-//         <Link to="/home"><SubmitButton type="submit">Login</SubmitButton></Link>
-
-
 export const SiteNavbar = props => {
+    
+    const history = useHistory()
+    const handleSignOut = () => {
+        runLogout()
+        history.push('/')
+    }
+
+    const runLogout = async () => {
+
+        console.log("Running Logout")
+
+        try {
+            let res = await fetch('/logout', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    action: 'Logging out'
+                })
+            })
+
+            let result = await res.json();
+            console.log(result)
+        }
+
+        catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
             <Navbar collapseOnSelect expand="lg" 
             style={{backgroundColor: "#203f6b"}} 
@@ -39,7 +68,7 @@ export const SiteNavbar = props => {
                 <Nav>
                     <Button variant="outline-primary">Profile</Button>
                     <Marginer direction="horizontal" margin="1.6em"/>
-                    <Button variant="outline-danger">Sign-out</Button>
+                    <Button variant="outline-danger" onClick={() => handleSignOut()}>Sign-out</Button>
                 </Nav>
         </Navbar.Collapse>
         </Navbar>

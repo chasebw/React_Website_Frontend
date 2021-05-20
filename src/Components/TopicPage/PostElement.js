@@ -12,7 +12,7 @@ export const PostElement = (props) => {
           <img src="profile_picture.jpg" style={{maxHeight: "50px", width: "auto"}}></img>
         </div>
         <div class="post_username">
-          {props.post.user}
+          {props.post.user.username}
         </div>
         <div className="col-xs-3 post_content">
           {props.post.content}

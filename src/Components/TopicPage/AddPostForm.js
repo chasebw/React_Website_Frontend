@@ -16,7 +16,6 @@ export const AddPostForm = (props) => {
     }
     
     const [content, setContent] = useState('')
-    const [user, setUser] = useState('RobotUser137')
     const [time, setTime] = useState(grabTime())
     const [isLoading, setIsLoading] = useState(false)
     const [buttonDisabled, setButtonDisabled] = useState(false)
@@ -43,7 +42,6 @@ export const AddPostForm = (props) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user: user,
                     content: content,
                     time: time,
                 })

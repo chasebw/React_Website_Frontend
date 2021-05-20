@@ -24,7 +24,6 @@ export const EditModule = (props) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                user: singlePostModal.user,
                 content: singlePostModal.content,
                 time: singlePostModal.time,
             })
@@ -38,6 +37,8 @@ export const EditModule = (props) => {
         console.log(e)
     }
    }
+
+   const username = singlePostModal.user.username;
 
     return (
         <Modal
@@ -59,7 +60,7 @@ export const EditModule = (props) => {
         <Form>
             <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>User</Form.Label>
-                <Form.Control type="text" value={singlePostModal.user} readOnly />
+                <Form.Control type="text" value={username} readOnly />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput2">
                 <Form.Label>Post_id</Form.Label>
