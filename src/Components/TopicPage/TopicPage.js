@@ -8,6 +8,8 @@ import { EditModule } from './EditModule';
 import { DeleteModule } from './DeletePostModule';
 import { useFetch } from './CustomHooks/useFetch';
 import { PostModalProvider } from './PostModalContext'
+import { FeedbackMessageProvider } from './FeedbackMessageContext'
+import { FeedbackAlert } from './FeedbackAlert'
 
 export const TopicPage = (props) => {
 
@@ -63,9 +65,15 @@ useEffect(() => {
           <SiteNavbar />
           <Marginer direction="vertical" margin="1.6em"/>
           <PageBanner page={props.page}/>
-          <AddPostForm refreshPosts={grabPosts}/>
-          
+
+
+        <FeedbackMessageProvider>
         <PostModalProvider> {/* Gives the Context of a Single Post*/}
+
+          <AddPostForm refreshPosts={grabPosts}/>
+         
+           
+         <FeedbackAlert/>
 
           <PostContainer 
           posts={posts}
@@ -91,7 +99,7 @@ useEffect(() => {
           />
 
         </PostModalProvider>
-
-          </>
+        </FeedbackMessageProvider>
+        </>
         );
 }

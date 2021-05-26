@@ -127,8 +127,16 @@ padding: 12px;
   cursor: pointer;
 }
 
+.margined {
+  margin: 5px 36px;
+}
+
 .card-actions button:hover,
 .card-actions button:active {
   background-color: #00695c;
   color: white;
+}
+
+form .invalid {
+  border-color:red;
 }

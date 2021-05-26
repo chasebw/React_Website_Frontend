@@ -26,6 +26,7 @@ export function LoginForm(props) {
         e.preventDefault();
         console.log("Form is being submit")
         const result = await runLogin()
+        console.log(result)
         setLoginInput(placeholderLogin)
         if(result.success)
         {
@@ -37,7 +38,7 @@ export function LoginForm(props) {
         {
             console.log("Unsuccessful Login")
             setErrorMessage(result.message)
-            setLoginInput(placeholderLogin)
+            setLoginInput({...loginInput, password: ""})
         }
     }
 

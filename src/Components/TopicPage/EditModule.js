@@ -2,16 +2,20 @@ import React, { useContext } from 'react'
 import { Modal, Button, Form, Spinner } from 'react-bootstrap'
 import { PostModalContext } from './PostModalContext'
 
-
 export const EditModule = (props) => {
 
     const {singlePostModal, setSinglePostModal, setPostModalIsLoading} = useContext(PostModalContext)
 
-   const handleSubmit = (event) => {
+   const handleSubmit = async (event) => {
        event.preventDefault()
        props.onHide()
-       submitEditForm()
-       props.refreshPosts() //TODO convert to 'posts context function'
+       const result = await submitEditForm()
+       console.log("Result Edit")
+       console.log(result)
+       if(result.success) 
+       {
+           props.refreshPosts()
+       }
    }
 
    const submitEditForm = async () => {
@@ -31,6 +35,7 @@ export const EditModule = (props) => {
 
         let result = await res.json();
         console.log(result)
+        return result
     }
 
     catch (e) {

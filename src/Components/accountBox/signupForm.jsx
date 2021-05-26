@@ -9,6 +9,7 @@ export function SignupForm(props){
     const placeholderState = {username: "", email: "", password: "", confirmPassword: ""}
     const [signupInfo, setSignupInfo] = useState(placeholderState)
     const [errorMessage, setErrorMessage] = useState("")
+    const [FormErrors, setFormErrors] = useState([])
 
     const handleFormChange = (e) => {
         setSignupInfo({...signupInfo, [e.target.name]:e.target.value})
@@ -28,9 +29,9 @@ export function SignupForm(props){
         {
             console.log("Error On signup")
             setErrorMessage(result.message)
-            setSignupInfo(placeholderState)
+            setSignupInfo({...signupInfo, password: "", confirmPassword: ""})
+            setFormErrors(result.errors)
         }
-
     }
 
     const runSignup = async () => {
@@ -69,19 +70,23 @@ export function SignupForm(props){
 
         <Input type="text" placeholder="Username" 
         value={signupInfo.username} 
+        className={FormErrors.find(e => e.param === 'username') ? 'invalid' : ''}
         onChange={(e) => handleFormChange(e)} name="username" />
 
         <Input type="text" placeholder="Email" 
         value={signupInfo.email} 
+        className={FormErrors.find(e => e.param === 'email') ? 'invalid' : ''}
         onChange={(e) => handleFormChange(e)} name="email"/>
 
         <Input type="password" placeholder="Password" 
         value={signupInfo.password} 
+        className={FormErrors.find(e => e.param === 'password') ? 'invalid' : ''}
         onChange={(e) => handleFormChange(e)} name="password" />
 
         <Input type="password" 
         placeholder="Confirm Password" 
-        value={signupInfo.passwordConfirm} 
+        value={signupInfo.confirmPassword} 
+        className={FormErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : ''}
         onChange={(e) => handleFormChange(e)} name="confirmPassword" />
 
         <Marginer direction="vertical" margin={11}/>

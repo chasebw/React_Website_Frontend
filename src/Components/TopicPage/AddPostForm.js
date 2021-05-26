@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Button, Spinner } from 'react-bootstrap'
 import { useFetch } from './CustomHooks/useFetch'
+import { FeedbackMessageContext } from './FeedbackMessageContext'
 
 //import { SiteNavbar } from '../Navbar/Navbar';
 //import  {Marginer } from "../Marginer/index"
 
 export const AddPostForm = (props) => {
+
+    const {setFeedbackMessage, setFeedbackMessageShow, setFeedbackType} = useContext(FeedbackMessageContext)
 
     const grabTime = () => {
 
@@ -20,10 +23,22 @@ export const AddPostForm = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const [buttonDisabled, setButtonDisabled] = useState(false)
 
-    const handleSubmit = (event) => {
-        addPost()
+    const handleSubmit = async (event) => {
         event.preventDefault()
-        props.refreshPosts()
+        const result = await addPost()
+        console.log(result)
+        if (result.success) {
+            props.refreshPosts()
+            setFeedbackMessage(result)
+            setFeedbackType(true)
+            setFeedbackMessageShow(true)
+        }
+        else 
+        {
+            setFeedbackMessage(result)
+            setFeedbackType(false)
+            setFeedbackMessageShow(true)
+        }
     }
 
     const addPost = async () => {
@@ -51,12 +66,14 @@ export const AddPostForm = (props) => {
             setIsLoading(false)
             console.log(result)
             setContent('')
+            return result
         }
 
         catch (e) {
             setIsLoading(false)
             console.log(e)
             setContent('')
+            return {success:false, action: "AddPost", error: e}
         }
     }
 
@@ -76,7 +93,7 @@ export const AddPostForm = (props) => {
                 <Button
                     variant="primary"
                     type="submit"
-                    disabled={buttonDisabled}
+                    disabled={content ? false : true}
                     onClick={handleSubmit}>
                     Add Post
             </Button>

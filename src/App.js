@@ -36,7 +36,7 @@ function App() {
         {/* Sports Page */}
         <Route path="/sports" component={() => <TopicPage page="Sports" />} /> 
       </Switch>
-    </Router>
+    </Router>  
   );
 }
 
