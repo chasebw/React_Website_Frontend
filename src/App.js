@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { AccountBox } from './Components/accountBox';
 import { Home } from './Components/HomePage/Home'
 import { TopicPage } from './Components/TopicPage/TopicPage'
+import { ProfilePage } from './Components/ProfilePage/ProfilePage' 
+import { pages }  from './Components/data/pages'
 
 import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
 
@@ -15,6 +17,7 @@ const AppContainer = styled.div`
   align-items: center;
   justify-content:center;
 `;
+
 
 function App() {
 
@@ -34,7 +37,12 @@ function App() {
         <Route path="/home" component={Home} />
 
         {/* Sports Page */}
-        <Route path="/sports" component={() => <TopicPage page="Sports" />} /> 
+        {pages.map(page => <Route path={`/${page}`} component={ () => <TopicPage page={page} />} />  )}
+
+        {/* <Route path="/sports" component={() => <TopicPage page="sports" />} />  */}
+
+        {/* Profile Page */}
+        <Route path="/profile" component={() => <ProfilePage/>} /> 
       </Switch>
     </Router>  
   );

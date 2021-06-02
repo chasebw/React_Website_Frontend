@@ -32,16 +32,15 @@ export const TopicPage = (props) => {
   const grabPosts = async () => {
     console.log("Running fetch all posts")
     try {
-        let res = await fetch('/posts/all', {
-          method: 'GET',
+        let res = await fetch('/posts/AllPosts', {
+          method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          query: JSON.stringify({
-            user: 'RobotUser137',
-            message: 'hello Server',
-            userid: 3
+          body: JSON.stringify({
+            page: props.page,
+            message: "requesting page info"
           })
         })
 
@@ -58,7 +57,7 @@ export const TopicPage = (props) => {
 // When this element is rendered it will grab posts
 useEffect(() => {
   grabPosts()
-},[])
+},[props.page])
 
         return (
           <>
@@ -70,7 +69,7 @@ useEffect(() => {
         <FeedbackMessageProvider>
         <PostModalProvider> {/* Gives the Context of a Single Post*/}
 
-          <AddPostForm refreshPosts={grabPosts}/>
+          <AddPostForm page={props.page} refreshPosts={grabPosts}/>
          
            
          <FeedbackAlert/>

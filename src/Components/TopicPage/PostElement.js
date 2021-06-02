@@ -9,7 +9,7 @@ export const PostElement = (props) => {
   return (
     <div className="topic_post row" style={{ backgroundColor: "white" }}>
         <div className="col-xs-3 post_image">
-          <img src="profile_picture.jpg" style={{maxHeight: "50px", width: "auto"}}></img>
+          <img src={props.post.user.profilePicture} style={{maxHeight: "50px", width: "auto"}}></img>
         </div>
         <div class="post_username">
           {props.post.user.username}

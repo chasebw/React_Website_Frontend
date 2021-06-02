@@ -11,7 +11,7 @@ export const PageBanner = props => {
     return (
         <Jumbotron fluid style={{color: "#203f6b", backgroundColor: "white"}}>
             <Container className="text-center">
-                <h1>{props.page ? props.page : "Home"} Page</h1>
+                <h1>{props.page ? props.page[0].toUpperCase() + props.page.slice(1) : "Home"} Page</h1>
                 <p>
                 Welcome!
                 </p>

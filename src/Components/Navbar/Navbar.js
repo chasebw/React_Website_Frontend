@@ -1,8 +1,8 @@
 import React from 'react'
 import {Navbar, Nav, Button} from 'react-bootstrap'
 import { Marginer } from '../Marginer'
-import { Link, useHistory } from 'react-router-dom' 
-
+import { Link, NavLink, useHistory } from 'react-router-dom' 
+import { pages } from '../data/pages'
 
 // Note: use this link to adjust color schemes
 // https://getbootstrap.com/docs/4.0/components/navbar/#color-schemes
@@ -59,14 +59,11 @@ export const SiteNavbar = props => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="#Home">Home</Nav.Link>
-                    <Nav.Link href="#Sports"><Link to="/sports">Sports</Link></Nav.Link>
-                    <Nav.Link href="#Photography">Photography</Nav.Link>
-                    <Nav.Link href="#Music">Music</Nav.Link>
-                    <Nav.Link href="#Skating">Skating</Nav.Link>
+                    <Nav.Link><Link to="/home">Home</Link></Nav.Link>
+                    {pages.map(page => <Nav.Link><Link to={`/${page}`}>{page[0].toUpperCase() + page.slice(1)}</Link></Nav.Link>)}
                 </Nav>
                 <Nav>
-                    <Button variant="outline-primary">Profile</Button>
+                    <Button variant="outline-primary" onClick={() => history.push('/profile')}>Profile</Button>
                     <Marginer direction="horizontal" margin="1.6em"/>
                     <Button variant="outline-danger" onClick={() => handleSignOut()}>Sign-out</Button>
                 </Nav>

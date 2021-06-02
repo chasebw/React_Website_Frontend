@@ -58,6 +58,7 @@ export const AddPostForm = (props) => {
                 },
                 body: JSON.stringify({
                     content: content,
+                    page: props.page,
                     time: time,
                 })
             })

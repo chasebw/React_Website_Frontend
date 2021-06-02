@@ -1,6 +1,9 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 
 export const Card = props => {
+
+    const history = useHistory()
 
     return (
         <article className="card topic-item">
@@ -17,7 +20,7 @@ export const Card = props => {
                 <p className="topic-description"> {props.page.description} </p>
             </div>
             <div className="card-actions">
-                <button className="btn btn-primary"> Visit Page</button>
+                <button className="btn btn-primary" onClick={() => history.push(`/${props.page.name.toLowerCase()}`)} > Visit Page</button>
             </div>
         </article>
     );
