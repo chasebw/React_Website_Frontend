@@ -83,6 +83,8 @@ export const ProfileForm = () => {
         let result = await changeProfilePicture()
         //getUser
         grabUserInfo()
+        //reset form
+        e.target.reset()
     }
 
     const changeProfilePicture = async () => {
