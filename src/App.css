@@ -140,3 +140,27 @@ padding: 12px;
 form .invalid {
   border-color:red;
 }
+
+.pagination {
+  margin:  auto;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination button{
+  margin-top: 0 1rem;
+  text-decoration: none;
+  color:#203f6b;
+  padding: 0.5rem;
+  margin: 0 1rem;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  font-weight: 700;
+  border: 2px solid blue;
+}
+
+.pagination button:hover, button:active, button:focus {
+  background-color:#06429e;
+  color:white;
+}

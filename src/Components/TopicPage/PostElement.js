@@ -23,8 +23,6 @@ export const PostElement = (props) => {
           <button onClick={() => handleShowModal(props.post._id, props.setEditModalShow)} className="btn btn-primary post_button">Edit</button>
           <button onClick={() => handleShowModal(props.post._id, props.setDeleteModalShow)} className="btn btn-danger post_button">Delete</button>
         </div>: "" }
-
-         
         </div>
       </div>
   );

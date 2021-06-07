@@ -6,8 +6,9 @@ import { Home } from './Components/HomePage/Home'
 import { TopicPage } from './Components/TopicPage/TopicPage'
 import { ProfilePage } from './Components/ProfilePage/ProfilePage' 
 import { pages }  from './Components/data/pages'
+import { PostInfoProvider } from './Components/TopicPage/PostContextManager/PostInfoContext'
 
-import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const AppContainer = styled.div`
   width: 100%;
@@ -36,9 +37,14 @@ function App() {
         {/* Home Page */}
         <Route path="/home" component={Home} />
 
-        {/* Sports Page */}
-        {pages.map(page => <Route path={`/${page}`} component={ () => <TopicPage page={page} />} />  )}
+        {/* Topic Pages */}
+        {pages.map(page => <Route path={`/${page}`} component={ () => 
+        <PostInfoProvider>
+        <TopicPage page={page} />
+        </PostInfoProvider>
+        } />  )}
 
+        {/* TODO Delete Below */}
         {/* <Route path="/sports" component={() => <TopicPage page="sports" />} />  */}
 
         {/* Profile Page */}

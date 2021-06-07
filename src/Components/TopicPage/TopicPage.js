@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import { SiteNavbar } from '../Navbar/Navbar';
 import { PageBanner } from '../PageBanner/PageBanner';
 import { Marginer } from "../Marginer/index"
@@ -6,17 +6,18 @@ import { PostContainer } from "./PostContainer"
 import { AddPostForm } from './AddPostForm';
 import { EditModule } from './EditModule';
 import { DeleteModule } from './DeletePostModule';
-import { useFetch } from './CustomHooks/useFetch';
 import { PostModalProvider } from './PostModalContext'
 import { FeedbackMessageProvider } from './FeedbackMessageContext'
 import { FeedbackAlert } from './FeedbackAlert'
+import { PaginationLinks } from './PaginationLinks'
+import { PostInfoContext } from './PostContextManager/PostInfoContext'
 
 export const TopicPage = (props) => {
 
+  const {pageNumber, setTotalPosts, totalPosts} = useContext(PostInfoContext)
   const [posts, setPosts] = useState([])
   const [editModalShow, setEditModalShow] = useState(false)
   const [deleteModalShow, setDeleteModalShow] = useState(false)
-
 
   const editPlaceholder =  {name: 'PlaceHolderName', 
   content: 'PlaceHolderContent', 
@@ -40,13 +41,15 @@ export const TopicPage = (props) => {
           },
           body: JSON.stringify({
             page: props.page,
-            message: "requesting page info"
+            message: "requesting page info",
+            pageNumber: pageNumber
           })
         })
 
         let result = await res.json();
         console.log(result.posts)
         setPosts(result.posts)
+        setTotalPosts(result.totalPosts)
       }
   
       catch(e) { 
@@ -57,7 +60,7 @@ export const TopicPage = (props) => {
 // When this element is rendered it will grab posts
 useEffect(() => {
   grabPosts()
-},[props.page])
+},[props.page, pageNumber])
 
         return (
           <>
@@ -79,6 +82,9 @@ useEffect(() => {
           setEditModalShow={setEditModalShow}
           setDeleteModalShow={setDeleteModalShow}
           />
+
+          <PaginationLinks/> 
+          <Marginer direction="vertical" margin="1em" />   
       
           <EditModule
           show={editModalShow}
