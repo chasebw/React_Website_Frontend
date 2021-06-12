@@ -4,7 +4,13 @@ import { PostModalContext } from './PostModalContext'
 
 export const EditModule = (props) => {
 
-    const {singlePostModal, setSinglePostModal, setPostModalIsLoading} = useContext(PostModalContext)
+    const {
+        singlePostModal, 
+        setSinglePostModal, 
+        setPostModalIsLoading,
+        selectedFile,
+        setSelectedFile
+    } = useContext(PostModalContext)
 
    const handleSubmit = async (event) => {
        event.preventDefault()
@@ -21,16 +27,14 @@ export const EditModule = (props) => {
    const submitEditForm = async () => {
     console.log("Running Edit Post")
     try {
+        const formData = new FormData()
+        formData.append("content", singlePostModal.content)
+        formData.append("time", singlePostModal.time)
+        formData.append("postImage", selectedFile)
+
         let res = await fetch(`posts/editPost/${singlePostModal._id}`, {
             method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                content: singlePostModal.content,
-                time: singlePostModal.time,
-            })
+            body: formData
         })
 
         let result = await res.json();
@@ -84,6 +88,10 @@ export const EditModule = (props) => {
                 value={singlePostModal.content} 
                 onChange={(e) =>  setSinglePostModal({...singlePostModal, content: e.target.value})}/> 
 
+            </Form.Group>
+            <Form.Group controlId="editFileInput">
+                <Form.Label> Input File </Form.Label>
+                <input type="file" id="editFileInput" onChange={(e) => setSelectedFile(e.target.files[0]) }/>
             </Form.Group>
         </Form >
         }

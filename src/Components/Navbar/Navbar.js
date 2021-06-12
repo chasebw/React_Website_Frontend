@@ -8,6 +8,8 @@ import { pages } from '../data/pages'
 // https://getbootstrap.com/docs/4.0/components/navbar/#color-schemes
 
 
+const SERVER = process.env.REACT_APP_SERVER || '/'
+
 export const SiteNavbar = props => {
     
     const history = useHistory()
@@ -21,7 +23,7 @@ export const SiteNavbar = props => {
         console.log("Running Logout")
 
         try {
-            let res = await fetch('/logout', {
+            let res = await fetch(`${SERVER}logout`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

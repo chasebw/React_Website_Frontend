@@ -4,6 +4,7 @@ import {Marginer} from "../Marginer";
 import { AccountContext } from './accountContext'
 import { useHistory } from 'react-router-dom'
 
+const SERVER = process.env.REACT_APP_SERVER || '/'
 
 export function LoginForm(props) {
     const { switchToSignup } = useContext(AccountContext)
@@ -46,7 +47,7 @@ export function LoginForm(props) {
 
         console.log("Running login request")
         try {
-            let res = await fetch('/login', {
+            let res = await fetch( `${SERVER}login`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

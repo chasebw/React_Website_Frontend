@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
 import { Form, Button, Spinner } from 'react-bootstrap'
-import { useFetch } from './CustomHooks/useFetch'
 import { FeedbackMessageContext } from './FeedbackMessageContext'
 
 //import { SiteNavbar } from '../Navbar/Navbar';
@@ -8,7 +7,7 @@ import { FeedbackMessageContext } from './FeedbackMessageContext'
 
 export const AddPostForm = (props) => {
 
-    const {setFeedbackMessage, setFeedbackMessageShow, setFeedbackType} = useContext(FeedbackMessageContext)
+    const { setFeedbackMessage, setFeedbackMessageShow, setFeedbackType } = useContext(FeedbackMessageContext)
 
     const grabTime = () => {
 
@@ -17,11 +16,11 @@ export const AddPostForm = (props) => {
         const timeString = date.toLocaleTimeString()
         return dateString + ", " + timeString;
     }
-    
+
     const [content, setContent] = useState('')
     const [time, setTime] = useState(grabTime())
     const [isLoading, setIsLoading] = useState(false)
-    const [buttonDisabled, setButtonDisabled] = useState(false)
+    const [selectedFile, setSelectedFile] = useState(null)
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -32,9 +31,11 @@ export const AddPostForm = (props) => {
             setFeedbackMessage(result)
             setFeedbackType(true)
             setFeedbackMessageShow(true)
+            event.target.reset()
+            setSelectedFile(null)
+            document.getElementById("fileInput").value = ""
         }
-        else 
-        {
+        else {
             setFeedbackMessage(result)
             setFeedbackType(false)
             setFeedbackMessageShow(true)
@@ -49,19 +50,20 @@ export const AddPostForm = (props) => {
             return;
         }
 
+        const formData = new FormData()
+        formData.append("page", props.page)
+        formData.append("postImage", selectedFile ? selectedFile : null)
+        formData.append("content", content)
+        formData.append("time", time)
+
         try {
             let res = await fetch('/posts/addPost', {
                 method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    content: content,
-                    page: props.page,
-                    time: time,
-                })
+                body: formData
             })
+
+            console.log("Form Data")
+            console.log(formData)
 
             let result = await res.json();
             setIsLoading(false)
@@ -74,15 +76,15 @@ export const AddPostForm = (props) => {
             setIsLoading(false)
             console.log(e)
             setContent('')
-            return {success:false, action: "AddPost", error: e}
+            return { success: false, action: "AddPost", error: e }
         }
     }
 
     return (
         <div className="add_post_form_container">
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label style={{color:'white'}}>Add a post here: </Form.Label>
+                    <Form.Label style={{ color: 'white' }}>Add a post here: </Form.Label>
                     <Form.Control
                         as="textarea"
                         rows={5}
@@ -91,11 +93,14 @@ export const AddPostForm = (props) => {
                         placeholder="Write something here ..."
                     />
                 </Form.Group>
+                <Form.Group controlId="fileInput" className="choose_file">
+                  <input type="file" name="postImage" onChange={(e) => {setSelectedFile(e.target.files[0])}}/>
+                </Form.Group>
                 <Button
                     variant="primary"
                     type="submit"
                     disabled={content ? false : true}
-                    onClick={handleSubmit}>
+                    >
                     Add Post
             </Button>
             </Form>

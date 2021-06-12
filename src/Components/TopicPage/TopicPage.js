@@ -12,6 +12,8 @@ import { FeedbackAlert } from './FeedbackAlert'
 import { PaginationLinks } from './PaginationLinks'
 import { PostInfoContext } from './PostContextManager/PostInfoContext'
 
+const SERVER = process.env.REACT_APP_SERVER || '/'
+
 export const TopicPage = (props) => {
 
   const {pageNumber, setTotalPosts, totalPosts} = useContext(PostInfoContext)
@@ -33,7 +35,7 @@ export const TopicPage = (props) => {
   const grabPosts = async () => {
     console.log("Running fetch all posts")
     try {
-        let res = await fetch('/posts/AllPosts', {
+        let res = await fetch(`${SERVER}posts/AllPosts`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',

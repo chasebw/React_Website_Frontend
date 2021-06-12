@@ -46,7 +46,7 @@
 
 .post_content {
   padding: 5px 12px;
-  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .post_button_div {
@@ -163,4 +163,20 @@ form .invalid {
 .pagination button:hover, button:active, button:focus {
   background-color:#06429e;
   color:white;
+}
+
+
+.img-post {
+  max-height: 500px;
+  width:auto;
+}
+
+@media only screen and (max-width: 780px) {
+  .img-post {
+    max-height: 400px;
+  }
+}
+
+.choose_file {
+  margin:2px;
 }

@@ -6,11 +6,13 @@ export const PostModalContextPlaceHolder = {
     user: {username: "usernamePlaceholder", _id: "placeholderID"},
     content: "PlaceHolderContent",
     time: "PlaceHolderTime",
-    _id: "PlaceHolderId"
+    _id: "PlaceHolderId",
+    image: "placeHolderImage"
 }
 
 export const PostModalProvider = (props) => {
 
+    const [selectedFile, setSelectedFile] = useState(null)
     const [singlePostModal, setSinglePostModal] = useState(PostModalContextPlaceHolder)
     const [postModalIsLoading, setPostModalIsLoading] = useState(true)
     const [ModalShow, setModalShow] = useState(false)
@@ -64,7 +66,9 @@ export const PostModalProvider = (props) => {
             postModalIsLoading,
             setPostModalIsLoading,
             handleShowModal,
-            handleCloseModal
+            handleCloseModal,
+            setSelectedFile,
+            selectedFile
             }}>
 
             {props.children}

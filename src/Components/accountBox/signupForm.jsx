@@ -3,6 +3,8 @@ import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton }
 import {Marginer} from "../Marginer";
 import { AccountContext } from './accountContext';
 
+const SERVER = process.env.REACT_APP_SERVER || '/'
+
 export function SignupForm(props){
     const { switchToSignin } = useContext(AccountContext);
 
@@ -37,7 +39,7 @@ export function SignupForm(props){
     const runSignup = async () => {
         console.log("Running SignUp request")
         try {
-            let res = await fetch('/signup', {
+            let res = await fetch(`${SERVER}signup`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
